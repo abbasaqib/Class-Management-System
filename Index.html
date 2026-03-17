@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+    
+    .login-container { max-width: 400px; margin: 100px auto; }
+    
+    .login-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    
+    .login-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .login-header i { font-size: 48px; margin-bottom: 15px; }
+    .login-body { padding: 30px; }
+    
+    .main-container { max-width: 1400px; margin: 0 auto; }
+    .hidden { display: none !important; }
+    
+    .card { 
+      margin-bottom: 20px; 
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .card-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 20px;
+    }
+    
+    .navbar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      padding: 15px 20px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      border: none;
+      color: white;
+    }
+    
+    .btn-info {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      border: none;
+      color: white;
+    }
+    
+    .btn-warning {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      border: none;
+      color: white;
+    }
+    
+    .btn-danger {
+      background: linear-gradient(135deg, #f54ea2 0%, #ff7676 100%);
+      border: none;
+      color: white;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .nav-tabs {
+      background: white;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+    }
+    
+    .nav-tabs .nav-link {
+      color: #666;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-right: 5px;
+    }
+    
+    .nav-tabs .nav-link:hover {
+      background: #f0f0f0;
+    }
+    
+    .nav-tabs .nav-link.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .table { 
+      background: white; 
+      border-radius: 10px; 
+      overflow: hidden; 
+    }
+    
+    .table thead th { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none; 
+    }
+    
+    .dashboard-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .dashboard-card h3 {
+      font-size: 36px;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #333;
+    }
+    
+    .dashboard-card p {
+      color: #666;
+      margin: 0;
+    }
+    
+    .class-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      height: 100%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .class-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+    
+    .class-card .student-count {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255,255,255,0.2);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    
+    .lecture-item, .meeting-item {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .meeting-item {
+      border-left-color: #f093fb;
+    }
+    
+    .thread-item {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+    
+    .thread-item.audio {
+      border-left: 4px solid #43e97b;
+    }
+    
+    .thread-item.comment {
+      border-left: 4px solid #667eea;
+      margin-left: 20px;
+    }
+    
+    .thread-meta {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    
+    .badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+    
+    .badge-primary { background: #667eea; color: white; }
+    .badge-success { background: #43e97b; color: white; }
+    .badge-danger { background: #f54ea2; color: white; }
+    .badge-warning { background: #f093fb; color: white; }
+    .badge-info { background: #4facfe; color: white; }
+    
+    .action-buttons .btn {
+      margin: 2px;
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+    
+    .modal-content { border-radius: 15px; }
+    .modal-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+    }
+    
+    .modal-header .close { color: white; }
+    
+    .student-item {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-left: 4px solid #4facfe;
+    }
+    
+    .upload-area {
+      border: 2px dashed #667eea;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      background: #f8f9fa;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .upload-area:hover {
+      background: #e9ecef;
+      border-color: #764ba2;
+    }
+    
+    .upload-area i {
+      font-size: 48px;
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+    
+    .file-info {
+      background: #e9ecef;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      display: none;
+    }
+    
+    .reply-form {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+    
+    .debug-console {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 200px;
+      overflow: auto;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Section -->
+  <div id="loginSection">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Class Management System</h3>
+        </div>
+        <div class="login-body">
+          <div id="loginMessage" class="alert alert-danger hidden"></div>
+          <div class="form-group">
+            <label>User ID:</label>
+            <input type="text" id="userId" class="form-control" placeholder="Enter your ID">
+          </div>
+          <div class="form-group">
+            <label>Password:</label>
+            <input type="password" id="password" class="form-control" placeholder="Enter your password">
+          </div>
+          <button onclick="login()" class="btn btn-primary btn-block">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Section -->
+  <div id="appSection" class="main-container hidden">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <span class="navbar-brand">
+        <i class="fas fa-graduation-cap"></i> Class Management System
+      </span>
+      <div class="ml-auto">
+        <span class="navbar-text mr-3 text-white" id="userInfo"></span>
+        <button onclick="logout()" class="btn btn-outline-light">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </nav>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="hidden">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#users">Users</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#classes">Classes</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#classView">View Classes</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <!-- Dashboard Tab -->
+        <div class="tab-pane active" id="dashboard">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="dashboard-card">
+                <i class="fas fa-users fa-3x" style="color: #667eea;"></i>
+                <h3 id="totalUsers">0</h3>
+                <p>Total Users</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="dashboard-card">
+                <i class="fas fa-chalkboard-teacher fa-3x" style="color: #43e97b;"></i>
+                <h3 id="totalProfessors">0</h3>
+                <p>Professors</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="dashboard-card">
+                <i class="fas fa-user-graduate fa-3x" style="color: #4facfe;"></i>
+                <h3 id="totalStudents">0</h3>
+                <p>Students</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="dashboard-card">
+                <i class="fas fa-school fa-3x" style="color: #f093fb;"></i>
+                <h3 id="totalClasses">0</h3>
+                <p>Classes</p>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <div class="dashboard-card">
+                <i class="fas fa-video fa-3x" style="color: #ff9a9e;"></i>
+                <h3 id="totalLectures">0</h3>
+                <p>Lectures</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="dashboard-card">
+                <i class="fas fa-calendar-alt fa-3x" style="color: #a8edea;"></i>
+                <h3 id="totalMeetings">0</h3>
+                <p>Meetings</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="dashboard-card">
+                <i class="fas fa-upload fa-3x" style="color: #d4fc79;"></i>
+                <h3 id="totalSubmissions">0</h3>
+                <p>Submissions</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div class="tab-pane" id="users">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header"><i class="fas fa-user-plus"></i> Create User</div>
+                <div class="card-body">
+                  <input type="text" id="newUserId" class="form-control mb-2" placeholder="User ID">
+                  <input type="text" id="newUserName" class="form-control mb-2" placeholder="Full Name">
+                  <input type="password" id="newUserPassword" class="form-control mb-2" placeholder="Password">
+                  <select id="newUserRole" class="form-control mb-2" onchange="toggleClassField()">
+                    <option value="">Select Role</option>
+                    <option value="professor">Professor</option>
+                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                  <select id="newUserClass" class="form-control mb-2 hidden">
+                    <option value="">Select Class</option>
+                  </select>
+                  <button onclick="createUser()" class="btn btn-success btn-block">
+                    <i class="fas fa-save"></i> Create User
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header"><i class="fas fa-list"></i> Users List</div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Role</th>
+                          <th>Class</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="usersTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Classes Tab -->
+        <div class="tab-pane" id="classes">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header"><i class="fas fa-plus-circle"></i> Create Class</div>
+                <div class="card-body">
+                  <input type="text" id="className" class="form-control mb-2" placeholder="Class Name">
+                  <select id="profId" class="form-control mb-2">
+                    <option value="">Select Professor</option>
+                  </select>
+                  <button onclick="createClass()" class="btn btn-success btn-block">
+                    <i class="fas fa-plus"></i> Create Class
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header"><i class="fas fa-school"></i> Classes List</div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Professor</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="classesTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Class View Tab (Admin) -->
+        <div class="tab-pane" id="classView">
+          <div class="card">
+            <div class="card-header"><i class="fas fa-school"></i> Classes</div>
+            <div class="card-body">
+              <div class="row" id="adminClassesGrid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Professor Panel -->
+    <div id="professorPanel" class="hidden">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#profClasses">My Classes</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane active" id="profClasses">
+          <div class="card">
+            <div class="card-header"><i class="fas fa-school"></i> My Classes</div>
+            <div class="card-body">
+              <div class="row" id="professorClassesGrid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Panel -->
+    <div id="studentPanel" class="hidden">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-school"></i> My Class</div>
+        <div class="card-body">
+          <div id="studentClassContent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Class Details Modal -->
+  <div class="modal fade" id="classDetailsModal" tabindex="-1" role="dialog" aria-labelledby="classDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="classDetailsModalLabel">Class Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs mb-3" id="classDetailsTabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="lectures-tab" data-toggle="tab" href="#classLectures" role="tab">Lectures</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="meetings-tab" data-toggle="tab" href="#classMeetings" role="tab">Meetings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="students-tab" data-toggle="tab" href="#classStudents" role="tab">Students</a>
+            </li>
+          </ul>
+          
+          <div class="tab-content" id="classDetailsTabContent">
+            <!-- Lectures Tab -->
+            <div class="tab-pane fade show active" id="classLectures" role="tabpanel">
+              <div id="classLecturesContent"></div>
+            </div>
+            
+            <!-- Meetings Tab -->
+            <div class="tab-pane fade" id="classMeetings" role="tabpanel">
+              <div id="classMeetingsContent"></div>
+            </div>
+            
+            <!-- Students Tab -->
+            <div class="tab-pane fade" id="classStudents" role="tabpanel">
+              <div id="classStudentsContent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Lecture Modal -->
+  <div class="modal fade" id="addLectureModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Add Lecture</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="addLectureClassId">
+          <div class="form-group">
+            <label>Title:</label>
+            <input type="text" id="lectureTitle" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Description:</label>
+            <textarea id="lectureDescription" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Video URL:</label>
+            <input type="url" id="lectureVideoUrl" class="form-control" placeholder="https://...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="saveLecture()">Save Lecture</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Meeting Modal -->
+  <div class="modal fade" id="addMeetingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-plus-circle"></i> Add Meeting</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="addMeetingClassId">
+          <div class="form-group">
+            <label>Title:</label>
+            <input type="text" id="meetingTitle" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Description:</label>
+            <textarea id="meetingDescription" class="form-control" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Meeting Link:</label>
+            <input type="url" id="meetingLink" class="form-control" placeholder="https://meet.google.com/...">
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Date:</label>
+              <input type="date" id="meetingDate" class="form-control">
+            </div>
+            <div class="form-group col-md-3">
+              <label>Start Time:</label>
+              <input type="time" id="meetingStartTime" class="form-control">
+            </div>
+            <div class="form-group col-md-3">
+              <label>End Time:</label>
+              <input type="time" id="meetingEndTime" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="saveMeeting()">Save Meeting</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lecture Thread Modal -->
+  <div class="modal fade" id="lectureThreadModal" tabindex="-1" role="dialog" aria-labelledby="lectureThreadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="lectureThreadModalLabel">Lecture Discussion</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="lectureInfo"></div>
+          <hr>
+          
+          <!-- Reply Form -->
+          <div class="reply-form">
+            <h6>Add to Discussion</h6>
+            
+            <!-- File Upload Area -->
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <h6>Click to upload audio file</h6>
+              <p class="text-muted">MP3, WAV, M4A files accepted</p>
+              <input type="file" id="fileInput" accept="audio/*" style="display: none;" onchange="handleFileSelect(this)">
+            </div>
+            
+            <div id="fileInfo" class="file-info">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <i class="fas fa-file-audio mr-2"></i>
+                  <span id="fileName"></span>
+                  <small class="text-muted ml-2" id="fileSize"></small>
+                </div>
+                <button class="btn btn-sm btn-danger" onclick="clearSelectedFile()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Comment Input -->
+            <div class="form-group mt-3">
+              <label>Or add a text comment:</label>
+              <textarea id="commentText" class="form-control" rows="2" placeholder="Type your comment..."></textarea>
+            </div>
+            
+            <button onclick="submitReply()" class="btn btn-primary btn-block">
+              <i class="fas fa-paper-plane"></i> Submit
+            </button>
+          </div>
+          
+          <hr>
+          <div id="threadContainer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit User Modal -->
+  <div class="modal fade" id="editUserModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-edit"></i> Edit User</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editUserId">
+          <div class="form-group">
+            <label>Name:</label>
+            <input type="text" id="editUserName" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Role:</label>
+            <select id="editUserRole" class="form-control">
+              <option value="professor">Professor</option>
+              <option value="student">Student</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="form-group" id="editClassField">
+            <label>Class:</label>
+            <select id="editUserClass" class="form-control">
+              <option value="">No Class</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Status:</label>
+            <select id="editUserStatus" class="form-control">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>New Password (leave blank to keep current):</label>
+            <input type="password" id="editUserPassword" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="saveUserEdit()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Class Modal -->
+  <div class="modal fade" id="editClassModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-edit"></i> Edit Class</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editClassId">
+          <div class="form-group">
+            <label>Class Name:</label>
+            <input type="text" id="editClassName" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Professor:</label>
+            <select id="editClassProfessor" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label>Status:</label>
+            <select id="editClassStatus" class="form-control">
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="saveClassEdit()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    let currentUser = null;
+    let sessionId = localStorage.getItem('sessionId');
+    let usersData = [];
+    let classesData = [];
+    let currentLectureId = null;
+    let currentClassId = null;
+    let currentReplyToId = null;
+    let selectedFile = null;
+
+    function log(message, data) {
+      console.log(message, data);
+    }
+
+    $(document).ready(function() {
+      if (sessionId) {
+        google.script.run.withSuccessHandler(function(user) {
+          if (user) {
+            currentUser = user;
+            showApp();
+          } else {
+            localStorage.removeItem('sessionId');
+          }
+        }).checkSession(sessionId);
+      }
+    });
+
+    function login() {
+      const userId = document.getElementById('userId').value.trim();
+      const password = document.getElementById('password').value;
+      
+      if (!userId || !password) {
+        alert('Please enter both User ID and Password');
+        return;
+      }
+      
+      google.script.run.withSuccessHandler(function(result) {
+        if (result.success) {
+          sessionId = result.sessionId;
+          currentUser = result.user;
+          localStorage.setItem('sessionId', sessionId);
+          showApp();
+        } else {
+          alert(result.message);
+        }
+      }).authenticate(userId, password);
+    }
+
+    function logout() {
+      if (sessionId) {
+        google.script.run.withSuccessHandler(function() {
+          localStorage.removeItem('sessionId');
+          sessionId = null;
+          currentUser = null;
+          document.getElementById('appSection').classList.add('hidden');
+          document.getElementById('loginSection').classList.remove('hidden');
+          document.getElementById('userId').value = '';
+          document.getElementById('password').value = '';
+          $('.modal').modal('hide');
+        }).logout(sessionId);
+      }
+    }
+
+    function showApp() {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('appSection').classList.remove('hidden');
+      document.getElementById('userInfo').innerHTML = '<i class="fas fa-user-circle"></i> ' + 
+        currentUser.name + ' (' + currentUser.userId + ')';
+      
+      document.getElementById('adminPanel').classList.add('hidden');
+      document.getElementById('professorPanel').classList.add('hidden');
+      document.getElementById('studentPanel').classList.add('hidden');
+      
+      if (currentUser.role === 'admin') {
+        document.getElementById('adminPanel').classList.remove('hidden');
+        loadDashboard();
+        loadUsers();
+        loadClasses();
+        loadProfessorsDropdown();
+        loadAdminClassesGrid();
+      } else if (currentUser.role === 'professor') {
+        document.getElementById('professorPanel').classList.remove('hidden');
+        loadProfessorClasses();
+      } else if (currentUser.role === 'student') {
+        document.getElementById('studentPanel').classList.remove('hidden');
+        loadStudentClass();
+      }
+    }
+
+    // ==================== DASHBOARD ====================
+    function loadDashboard() {
+      google.script.run.withSuccessHandler(function(stats) {
+        if (stats) {
+          document.getElementById('totalUsers').innerText = stats.totalUsers || 0;
+          document.getElementById('totalProfessors').innerText = stats.totalProfessors || 0;
+          document.getElementById('totalStudents').innerText = stats.totalStudents || 0;
+          document.getElementById('totalClasses').innerText = stats.totalClasses || 0;
+          document.getElementById('totalLectures').innerText = stats.totalLectures || 0;
+          document.getElementById('totalSubmissions').innerText = stats.totalSubmissions || 0;
+        }
+      }).getDashboardStats(sessionId);
+    }
+
+    // ==================== USER CRUD ====================
+    function loadUsers() {
+      google.script.run.withSuccessHandler(function(users) {
+        usersData = users;
+        let tbody = document.getElementById('usersTableBody');
+        tbody.innerHTML = '';
+        if (users && users.length > 0) {
+          users.forEach(user => {
+            tbody.innerHTML += `<tr>
+              <td>${user.userId}</td>
+              <td>${user.name}</td>
+              <td><span class="badge badge-${user.role === 'admin' ? 'danger' : (user.role === 'professor' ? 'primary' : 'success')}">${user.role}</span></td>
+              <td>${user.classId || '-'}</td>
+              <td><span class="badge badge-${user.status === 'Active' ? 'success' : 'danger'}">${user.status}</span></td>
+              <td>
+                <button class="btn btn-sm btn-info" onclick="editUser('${user.userId}')"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger" onclick="deleteUser('${user.userId}')"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>`;
+          });
+        } else {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center">No users found</td></tr>';
+        }
+      }).getAllUsers(sessionId);
+    }
+
+    function toggleClassField() {
+      const role = document.getElementById('newUserRole').value;
+      const classField = document.getElementById('newUserClass');
+      if (role === 'student') {
+        classField.classList.remove('hidden');
+        google.script.run.withSuccessHandler(function(classes) {
+          classField.innerHTML = '<option value="">Select Class</option>';
+          if (classes && classes.length > 0) {
+            classes.forEach(cls => {
+              classField.innerHTML += `<option value="${cls.classId}">${cls.className}</option>`;
+            });
+          }
+        }).getClassesList(sessionId);
+      } else {
+        classField.classList.add('hidden');
+      }
+    }
+
+    function createUser() {
+      const userData = {
+        userId: document.getElementById('newUserId').value,
+        name: document.getElementById('newUserName').value,
+        password: document.getElementById('newUserPassword').value,
+        role: document.getElementById('newUserRole').value,
+        classId: document.getElementById('newUserClass').value
+      };
+      
+      if (!userData.userId || !userData.name || !userData.password || !userData.role) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      google.script.run.withSuccessHandler(function(result) {
+        alert(result.message);
+        if (result.success) {
+          loadUsers();
+          document.getElementById('newUserId').value = '';
+          document.getElementById('newUserName').value = '';
+          document.getElementById('newUserPassword').value = '';
+          document.getElementById('newUserRole').value = '';
+          document.getElementById('newUserClass').classList.add('hidden');
+        }
+      }).createUser(userData, sessionId);
+    }
+
+    function editUser(userId) {
+      const user = usersData.find(u => u.userId === userId);
+      if (!user) return;
+      
+      document.getElementById('editUserId').value = userId;
+      document.getElementById('editUserName').value = user.name || '';
+      document.getElementById('editUserRole').value = user.role;
+      document.getElementById('editUserStatus').value = user.status || 'Active';
+      
+      google.script.run.withSuccessHandler(function(classes) {
+        let classSelect = document.getElementById('editUserClass');
+        classSelect.innerHTML = '<option value="">No Class</option>';
+        if (classes && classes.length > 0) {
+          classes.forEach(cls => {
+            classSelect.innerHTML += `<option value="${cls.classId}" ${cls.classId === user.classId ? 'selected' : ''}>${cls.className}</option>`;
+          });
+        }
+        $('#editUserModal').modal('show');
+      }).getClassesList(sessionId);
+    }
+
+    function saveUserEdit() {
+      const userId = document.getElementById('editUserId').value;
+      const updateData = {
+        name: document.getElementById('editUserName').value,
+        role: document.getElementById('editUserRole').value,
+        classId: document.getElementById('editUserClass').value,
+        status: document.getElementById('editUserStatus').value
+      };
+      
+      const newPassword = document.getElementById('editUserPassword').value;
+      if (newPassword) {
+        updateData.password = newPassword;
+      }
+      
+      google.script.run.withSuccessHandler(function(result) {
+        alert(result.message);
+        if (result.success) {
+          $('#editUserModal').modal('hide');
+          loadUsers();
+        }
+      }).updateUser(userId, updateData, sessionId);
+    }
+
+    function deleteUser(userId) {
+      if (confirm('Are you sure you want to delete this user?')) {
+        google.script.run.withSuccessHandler(function(result) {
+          alert(result.message);
+          if (result.success) {
+            loadUsers();
+          }
+        }).deleteUser(userId, sessionId);
+      }
+    }
+
+    // ==================== CLASS CRUD ====================
+    function loadProfessorsDropdown() {
+      google.script.run.withSuccessHandler(function(professors) {
+        let select = document.getElementById('profId');
+        select.innerHTML = '<option value="">Select Professor</option>';
+        if (professors && professors.length > 0) {
+          professors.forEach(prof => {
+            select.innerHTML += `<option value="${prof.userId}">${prof.name}</option>`;
+          });
+        }
+      }).getProfessors(sessionId);
+    }
+
+    function loadClasses() {
+      google.script.run.withSuccessHandler(function(classes) {
+        classesData = classes;
+        let tbody = document.getElementById('classesTableBody');
+        tbody.innerHTML = '';
+        if (classes && classes.length > 0) {
+          classes.forEach(cls => {
+            tbody.innerHTML += `<tr>
+              <td>${cls.classId}</td>
+              <td>${cls.className}</td>
+              <td>${cls.professorId}</td>
+              <td><span class="badge badge-${cls.status === 'Active' ? 'success' : 'danger'}">${cls.status}</span></td>
+              <td>
+                <button class="btn btn-sm btn-info" onclick="editClass('${cls.classId}')"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger" onclick="deleteClass('${cls.classId}')"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>`;
+          });
+        } else {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-center">No classes found</td></tr>';
+        }
+      }).getClassesList(sessionId);
+    }
+
+    function loadAdminClassesGrid() {
+      google.script.run.withSuccessHandler(function(classes) {
+        let grid = document.getElementById('adminClassesGrid');
+        grid.innerHTML = '';
+        if (classes && classes.length > 0) {
+          classes.forEach(cls => {
+            let studentCount = usersData.filter(u => u.classId === cls.classId && u.role === 'student').length;
+            
+            grid.innerHTML += `
+              <div class="col-md-4 mb-3">
+                <div class="class-card" onclick="viewClassDetails('${cls.classId}', '${cls.className}')">
+                  <span class="student-count"><i class="fas fa-users"></i> ${studentCount}</span>
+                  <h5>${cls.className}</h5>
+                  <p class="mb-0">ID: ${cls.classId}</p>
+                  <small>Professor: ${cls.professorId}</small>
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          grid.innerHTML = '<div class="col-12"><p class="text-muted text-center">No classes available</p></div>';
+        }
+      }).getClassesList(sessionId);
+    }
+
+    function createClass() {
+      const className = document.getElementById('className').value;
+      const professorId = document.getElementById('profId').value;
+      
+      if (!className || !professorId) {
+        alert('Please fill in all fields');
+        return;
+      }
+      
+      google.script.run.withSuccessHandler(function(result) {
+        alert(result.message);
+        if (result.success) {
+          loadClasses();
+          loadAdminClassesGrid();
+          document.getElementById('className').value = '';
+          document.getElementById('profId').value = '';
+        }
+      }).createClass(className, professorId, sessionId);
+    }
+
+    function editClass(classId) {
+      const cls = classesData.find(c => c.classId === classId);
+      if (!cls) return;
+      
+      document.getElementById('editClassId').value = classId;
+      document.getElementById('editClassName').value = cls.className;
+      document.getElementById('editClassStatus').value = cls.status || 'Active';
+      
+      google.script.run.withSuccessHandler(function(professors) {
+        let select = document.getElementById('editClassProfessor');
+        select.innerHTML = '';
+        if (professors && professors.length > 0) {
+          professors.forEach(prof => {
+            select.innerHTML += `<option value="${prof.userId}" ${prof.userId === cls.professorId ? 'selected' : ''}>${prof.name}</option>`;
+          });
+        }
+        $('#editClassModal').modal('show');
+      }).getProfessors(sessionId);
+    }
+
+    function saveClassEdit() {
+      const classId = document.getElementById('editClassId').value;
+      const updateData = {
+        className: document.getElementById('editClassName').value,
+        professorId: document.getElementById('editClassProfessor').value,
+        status: document.getElementById('editClassStatus').value
+      };
+      
+      google.script.run.withSuccessHandler(function(result) {
+        alert(result.message);
+        if (result.success) {
+          $('#editClassModal').modal('hide');
+          loadClasses();
+          loadAdminClassesGrid();
+        }
+      }).updateClass(classId, updateData, sessionId);
+    }
+
+    function deleteClass(classId) {
+      if (confirm('Are you sure you want to delete this class?')) {
+        google.script.run.withSuccessHandler(function(result) {
+          alert(result.message);
+          if (result.success) {
+            loadClasses();
+            loadAdminClassesGrid();
+          }
+        }).deleteClass(classId, sessionId);
+      }
+    }
+
+    // ==================== CLASS DETAILS VIEW ====================
+    function viewClassDetails(classId, className) {
+      currentClassId = classId;
+      document.getElementById('classDetailsModalLabel').innerText = className;
+      
+      // Load all sections
+      loadClassLectures(classId);
+      loadClassMeetings(classId);
+      loadClassStudents(classId);
+      
+      $('#classDetailsModal').modal('show');
+    }
+
+    function loadClassLectures(classId) {
+      google.script.run.withSuccessHandler(function(lectures) {
+        let html = '';
+        
+        // Add Lecture button for admins only
+        if (currentUser.role === 'admin') {
+          html += `
+            <div class="mb-3">
+              <button class="btn btn-success" onclick="showAddLectureForm('${classId}')">
+                <i class="fas fa-plus"></i> Add Lecture
+              </button>
+            </div>
+          `;
+        }
+        
+        if (lectures && lectures.length > 0) {
+          lectures.forEach(lecture => {
+            let dateStr = 'Unknown date';
+            try {
+              if (lecture.createdDate) {
+                dateStr = new Date(lecture.createdDate).toLocaleDateString();
+              }
+            } catch (e) {}
+            
+            html += `
+              <div class="lecture-item">
+                <h5>${lecture.title}</h5>
+                <p>${lecture.description || 'No description'}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <a href="${lecture.videoUrl}" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-play"></i> Watch Video</a>
+                    <button class="btn btn-sm btn-success" onclick="openLectureThread('${lecture.lectureId}', '${lecture.title}')">
+                      <i class="fas fa-comments"></i> Discussion
+                    </button>
+                  </div>
+                  <small class="text-muted">Added: ${dateStr}</small>
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          html += '<p class="text-muted text-center">No lectures in this class yet.</p>';
+        }
+        
+        document.getElementById('classLecturesContent').innerHTML = html;
+      }).getClassLectures(classId, sessionId);
+    }
+
+    function loadClassMeetings(classId) {
+      google.script.run.withSuccessHandler(function(meetings) {
+        let html = '';
+        
+        // Add Meeting button for admins only
+        if (currentUser.role === 'admin') {
+          html += `
+            <div class="mb-3">
+              <button class="btn btn-success" onclick="showAddMeetingForm('${classId}')">
+                <i class="fas fa-plus"></i> Add Meeting
+              </button>
+            </div>
+          `;
+        }
+        
+        if (meetings && meetings.length > 0) {
+          meetings.forEach(meeting => {
+            let meetingDateTime = 'Date not set';
+            if (meeting.meetingDate) {
+              meetingDateTime = `${meeting.meetingDate} ${meeting.startTime || ''} - ${meeting.endTime || ''}`;
+            }
+            
+            html += `
+              <div class="meeting-item">
+                <h5>${meeting.title}</h5>
+                <p>${meeting.description || 'No description'}</p>
+                <p><i class="fas fa-calendar-alt"></i> ${meetingDateTime}</p>
+                <a href="${meeting.meetingLink}" target="_blank" class="btn btn-sm btn-info">
+                  <i class="fas fa-video"></i> Join Meeting
+                </a>
+              </div>
+            `;
+          });
+        } else {
+          html += '<p class="text-muted text-center">No meetings scheduled for this class.</p>';
+        }
+        
+        document.getElementById('classMeetingsContent').innerHTML = html;
+      }).getClassMeetings(classId, sessionId);
+    }
+
+    function loadClassStudents(classId) {
+      google.script.run.withSuccessHandler(function(students) {
+        let html = '';
+        
+        if (students && students.length > 0) {
+          students.forEach(student => {
+            html += `
+              <div class="student-item">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="mb-1">${student.name}</h6>
+                    <small class="text-muted">ID: ${student.userId}</small>
+                  </div>
+                  <span class="badge badge-info">Student</span>
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          html = '<p class="text-muted text-center">No students enrolled in this class yet.</p>';
+        }
+        
+        document.getElementById('classStudentsContent').innerHTML = html;
+      }).getStudentsByClass(classId, sessionId);
+    }
+
+    function showAddLectureForm(classId) {
+      document.getElementById('addLectureClassId').value = classId;
+      document.getElementById('lectureTitle').value = '';
+      document.getElementById('lectureDescription').value = '';
+      document.getElementById('lectureVideoUrl').value = '';
+      $('#addLectureModal').modal('show');
+    }
+
+    function showAddMeetingForm(classId) {
+      document.getElementById('addMeetingClassId').value = classId;
+      document.getElementById('meetingTitle').value = '';
+      document.getElementById('meetingDescription').value = '';
+      document.getElementById('meetingLink').value = '';
+      
+      // Set default date to today
+      let today = new Date().toISOString().split('T')[0];
+      document.getElementById('meetingDate').value = today;
+      document.getElementById('meetingStartTime').value = '';
+      document.getElementById('meetingEndTime').value = '';
+      
+      $('#addMeetingModal').modal('show');
+    }
+
+    function saveLecture() {
+      const lectureData = {
+        classId: document.getElementById('addLectureClassId').value,
+        title: document.getElementById('lectureTitle').value,
+        description: document.getElementById('lectureDescription').value,
+        videoUrl: document.getElementById('lectureVideoUrl').value
+      };
+      
+      if (!lectureData.title || !lectureData.videoUrl) {
+        alert('Please fill in title and video URL');
+        return;
+      }
+      
+      google.script.run.withSuccessHandler(function(result) {
+        alert(result.message);
+        if (result.success) {
+          $('#addLectureModal').modal('hide');
+          loadClassLectures(lectureData.classId);
+        }
+      }).addLecture(lectureData, sessionId);
+    }
+
+    function saveMeeting() {
+      const meetingData = {
+        classId: document.getElementById('addMeetingClassId').value,
+        title: document.getElementById('meetingTitle').value,
+        description: document.getElementById('meetingDescription').value,
+        meetingLink: document.getElementById('meetingLink').value,
+        meetingDate: document.getElementById('meetingDate').value,
+        startTime: document.getElementById('meetingStartTime').value,
+        endTime: document.getElementById('meetingEndTime').value
+      };
+      
+      if (!meetingData.title || !meetingData.meetingLink || !meetingData.meetingDate) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      google.script.run.withSuccessHandler(function(result) {
+        alert(result.message);
+        if (result.success) {
+          $('#addMeetingModal').modal('hide');
+          loadClassMeetings(meetingData.classId);
+        }
+      }).addMeeting(meetingData, sessionId);
+    }
+
+    // ==================== PROFESSOR FUNCTIONS ====================
+    function loadProfessorClasses() {
+      google.script.run.withSuccessHandler(function(users) {
+        usersData = users;
+        
+        google.script.run.withSuccessHandler(function(classes) {
+          let grid = document.getElementById('professorClassesGrid');
+          grid.innerHTML = '';
+          if (classes && classes.length > 0) {
+            classes.forEach(cls => {
+              let studentCount = usersData.filter(u => u.classId === cls.classId && u.role === 'student' && u.status === 'Active').length;
+              
+              grid.innerHTML += `
+                <div class="col-md-4 mb-3">
+                  <div class="class-card" onclick="viewClassDetails('${cls.classId}', '${cls.className}')">
+                    <span class="student-count"><i class="fas fa-users"></i> ${studentCount}</span>
+                    <h5>${cls.className}</h5>
+                    <p class="mb-0">ID: ${cls.classId}</p>
+                  </div>
+                </div>
+              `;
+            });
+          } else {
+            grid.innerHTML = '<div class="col-12"><p class="text-muted text-center">No classes assigned</p></div>';
+          }
+        }).getProfessorClasses(currentUser.userId, sessionId);
+      }).getAllUsers(sessionId);
+    }
+
+    // ==================== STUDENT FUNCTIONS ====================
+    function loadStudentClass() {
+      if (!currentUser.classId) {
+        document.getElementById('studentClassContent').innerHTML = 
+          '<p class="text-muted text-center">You are not assigned to any class yet. Please contact your administrator.</p>';
+        return;
+      }
+      
+      google.script.run.withSuccessHandler(function(classes) {
+        const myClass = classes.find(c => c.classId === currentUser.classId);
+        if (myClass) {
+          document.getElementById('studentClassContent').innerHTML = `
+            <div class="row">
+              <div class="col-12 mb-3">
+                <div class="class-card" onclick="viewClassDetails('${myClass.classId}', '${myClass.className}')">
+                  <h4>${myClass.className}</h4>
+                  <p class="mb-0">ID: ${myClass.classId}</p>
+                  <small>Professor: ${myClass.professorId}</small>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }).getClassesList(sessionId);
+    }
+
+    // ==================== LECTURE THREAD & FILE UPLOAD ====================
+    function openLectureThread(lectureId, lectureTitle) {
+      currentLectureId = lectureId;
+      currentReplyToId = null;
+      document.getElementById('lectureInfo').innerHTML = `<h6>${lectureTitle}</h6>`;
+      clearReplyForm();
+      loadLectureThread();
+      $('#lectureThreadModal').modal('show');
+    }
+
+    function clearReplyForm() {
+      selectedFile = null;
+      document.getElementById('fileInput').value = '';
+      document.getElementById('fileInfo').style.display = 'none';
+      document.getElementById('fileName').innerText = '';
+      document.getElementById('fileSize').innerText = '';
+      document.getElementById('commentText').value = '';
+    }
+
+    function handleFileSelect(input) {
+      if (input.files && input.files[0]) {
+        selectedFile = input.files[0];
+        document.getElementById('fileName').innerText = selectedFile.name;
+        let size = (selectedFile.size / 1024).toFixed(2) + ' KB';
+        if (selectedFile.size > 1024 * 1024) {
+          size = (selectedFile.size / (1024 * 1024)).toFixed(2) + ' MB';
+        }
+        document.getElementById('fileSize').innerText = size;
+        document.getElementById('fileInfo').style.display = 'block';
+      }
+    }
+
+    function clearSelectedFile() {
+      selectedFile = null;
+      document.getElementById('fileInput').value = '';
+      document.getElementById('fileInfo').style.display = 'none';
+    }
+
+    function submitReply() {
+      const comment = document.getElementById('commentText').value;
+      
+      if (!selectedFile && !comment) {
+        alert('Please either select a file to upload or enter a comment');
+        return;
+      }
+      
+      if (selectedFile) {
+        // Upload file first
+        uploadFile(selectedFile);
+      } else {
+        // Submit text comment
+        submitTextComment(comment);
+      }
+    }
+
+    function uploadFile(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64Data = e.target.result;
+        
+        google.script.run.withSuccessHandler(function(result) {
+          if (result.success) {
+            // Create submission with file URL
+            const submissionData = {
+              lectureId: currentLectureId,
+              content: result.fileUrl,
+              type: 'audio',
+              fileName: result.fileName,
+              parentSubmissionId: currentReplyToId
+            };
+            
+            google.script.run.withSuccessHandler(function(submitResult) {
+              alert(submitResult.message);
+              if (submitResult.success) {
+                clearReplyForm();
+                currentReplyToId = null;
+                loadLectureThread();
+              }
+            }).submitToLecture(submissionData, sessionId);
+          } else {
+            alert('Upload failed: ' + result.message);
+          }
+        }).uploadAudioToDrive(base64Data, file.name, currentUser.classId, currentUser.userId, sessionId);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function submitTextComment(comment) {
+      const submissionData = {
+        lectureId: currentLectureId,
+        content: comment,
+        type: 'comment',
+        parentSubmissionId: currentReplyToId
+      };
+      
+      google.script.run.withSuccessHandler(function(result) {
+        alert(result.message);
+        if (result.success) {
+          clearReplyForm();
+          currentReplyToId = null;
+          loadLectureThread();
+        }
+      }).submitToLecture(submissionData, sessionId);
+    }
+
+    function loadLectureThread() {
+      google.script.run.withSuccessHandler(function(threads) {
+        let html = '';
+        
+        function renderThread(item, depth = 0) {
+          let marginLeft = depth * 20;
+          let typeClass = item.type === 'audio' ? 'audio' : 'comment';
+          let typeIcon = item.type === 'audio' ? 'fa-headphones' : 'fa-comment';
+          let gradeDisplay = item.grade ? `<span class="badge badge-success ml-2">Grade: ${item.grade}</span>` : '';
+          let dateStr = 'Unknown date';
+          try {
+            if (item.submittedDate) {
+              dateStr = new Date(item.submittedDate).toLocaleString();
+            }
+          } catch (e) {}
+          
+          let contentDisplay = '';
+          if (item.type === 'audio') {
+            contentDisplay = `
+              <div>
+                <a href="${item.content}" target="_blank" class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-headphones"></i> ${item.fileName || 'Listen to Audio'}
+                </a>
+              </div>
+            `;
+          } else {
+            contentDisplay = `<p>${item.content}</p>`;
+          }
+          
+          html += `
+            <div class="thread-item ${typeClass}" style="margin-left: ${marginLeft}px">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <i class="fas ${typeIcon} mr-2"></i>
+                  <strong>${item.userId}</strong> ${gradeDisplay}
+                </div>
+                <small class="thread-meta">${dateStr}</small>
+              </div>
+              <div class="mt-2">
+                ${contentDisplay}
+              </div>
+              ${currentUser.role === 'professor' && item.type === 'audio' && !item.grade ? 
+                `<div class="mt-2">
+                  <div class="input-group" style="max-width: 200px;">
+                    <input type="number" id="grade-${item.submissionId}" class="form-control form-control-sm" placeholder="Grade">
+                    <div class="input-group-append">
+                      <button class="btn btn-sm btn-success" onclick="gradeSubmission('${item.submissionId}')">Save</button>
+                    </div>
+                  </div>
+                </div>` : ''}
+              <div class="mt-2">
+                <button class="btn btn-sm btn-link" onclick="setReplyTo('${item.submissionId}')">Reply</button>
+              </div>
+            </div>
+          `;
+          
+          if (item.replies && item.replies.length > 0) {
+            item.replies.forEach(reply => renderThread(reply, depth + 1));
+          }
+        }
+        
+        if (threads && threads.length > 0) {
+          threads.forEach(item => renderThread(item));
+        } else {
+          html = '<p class="text-muted text-center">No discussions yet. Be the first to post!</p>';
+        }
+        
+        document.getElementById('threadContainer').innerHTML = html;
+      }).getLectureThread(currentLectureId, sessionId);
+    }
+
+    function setReplyTo(submissionId) {
+      currentReplyToId = submissionId;
+      document.getElementById('commentText').placeholder = 'Replying to selected message...';
+    }
+
+    function gradeSubmission(submissionId) {
+      const grade = document.getElementById('grade-' + submissionId).value;
+      if (!grade) {
+        alert('Please enter a grade');
+        return;
+      }
+      
+      google.script.run.withSuccessHandler(function(result) {
+        alert(result.message);
+        if (result.success) {
+          loadLectureThread();
+        }
+      }).updateSubmissionGrade(submissionId, grade, sessionId);
+    }
+  </script>
+</body>
+</html>
